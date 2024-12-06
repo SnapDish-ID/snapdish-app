@@ -1,32 +1,18 @@
 package com.github.wisemann64.snapdishapp.ui.recipe
 
 import android.os.Bundle
-import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.ViewModelFactoryDsl
 import com.github.wisemann64.snapdishapp.R
 import com.github.wisemann64.snapdishapp.databinding.ActivityRecipeBinding
 import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
+import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.VISIBLE
+import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.GONE
+import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.visibility
 
 class RecipeActivity : AppCompatActivity() {
-
-    companion object {
-        val GONE = View.GONE
-        val VISIBLE = View.VISIBLE
-
-        fun visibility(value: Boolean): Int {
-            return if (value) {
-                VISIBLE
-            } else {
-                GONE
-            }
-
-        }
-    }
 
     private lateinit var binding: ActivityRecipeBinding
     private lateinit var viewModel: RecipeViewModel

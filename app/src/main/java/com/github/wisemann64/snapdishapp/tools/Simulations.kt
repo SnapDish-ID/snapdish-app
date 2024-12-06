@@ -11,6 +11,11 @@ class Simulations {
             delay(1000)
             return DataRecipeDetailed(0,"nulllsss","Babi Guling Enak","resep resep resep blablabla")
         }
+
+        suspend fun simulateComVisInference(): List<String> {
+            delay(2000)
+            return listOf("wisam","leo","richard","toto","nasha","kenny")
+        }
     }
 
 }
