@@ -2,14 +2,13 @@ package com.github.wisemann64.snapdishapp.ui.items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.wisemann64.snapdishapp.data.DataRecipe
 import com.github.wisemann64.snapdishapp.databinding.ItemRecipeBinding
 
-class ListRecipeAdapter(private val caller: Fragment): ListAdapter<DataRecipe, ListRecipeAdapter.ListDataRecipeViewHolder>(
+class ListRecipeAdapter: ListAdapter<DataRecipe, ListRecipeAdapter.ListDataRecipeViewHolder>(
     DIFF_CALLBACK) {
 
     class ListDataRecipeViewHolder(private val binding: ItemRecipeBinding): RecyclerView.ViewHolder(binding.root) {
@@ -33,7 +32,7 @@ class ListRecipeAdapter(private val caller: Fragment): ListAdapter<DataRecipe, L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDataRecipeViewHolder {
         val binding = ItemRecipeBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return ListDataRecipeViewHolder(binding);
+        return ListDataRecipeViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListDataRecipeViewHolder, position: Int) {

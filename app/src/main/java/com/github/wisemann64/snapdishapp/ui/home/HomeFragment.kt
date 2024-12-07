@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.wisemann64.snapdishapp.data.DataRecipe
 import com.github.wisemann64.snapdishapp.databinding.FragmentHomeBinding
-import com.github.wisemann64.snapdishapp.databinding.ItemRecipeBinding
 import com.github.wisemann64.snapdishapp.ui.items.CustomLinearLayoutManager
 import com.github.wisemann64.snapdishapp.ui.items.ListRecipeAdapter
 import com.github.wisemann64.snapdishapp.ui.items.OnClickListener
@@ -24,7 +21,7 @@ class HomeFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get(): FragmentHomeBinding = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +44,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val rv: RecyclerView = binding.recentRecipes
-        val adapter = ListRecipeAdapter(this)
+        val adapter = ListRecipeAdapter()
         val list = mutableListOf(DataRecipe(0,"a","Rsep 1 gacor bgt wooh aku suka!!!"),
             DataRecipe(1,"b","Rsep 2 ga enakkkk"),
             DataRecipe(2,"c","Rsep 3 bolelaaa mayan enakk"))
@@ -57,9 +53,9 @@ class HomeFragment : Fragment() {
         rv.adapter = adapter
 
         adapter.setOnClickListener(object: OnClickListener {
-            override fun onClick(position: Int, event: DataRecipe) {
+            override fun onClick(position: Int, data: DataRecipe) {
                 val recipeIntent = Intent(requireActivity(), RecipeActivity::class.java)
-                recipeIntent.putExtra("RECIPE_ID", event.id)
+                recipeIntent.putExtra("RECIPE_ID", data.id)
                 startActivity(recipeIntent)
             }
 

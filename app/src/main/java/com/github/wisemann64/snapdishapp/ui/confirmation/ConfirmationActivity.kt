@@ -1,5 +1,6 @@
 package com.github.wisemann64.snapdishapp.ui.confirmation
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.visibil
 import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
 import com.github.wisemann64.snapdishapp.ui.items.ListStringAdapter
 import com.github.wisemann64.snapdishapp.ui.recipe.RecipeViewModel
+import com.github.wisemann64.snapdishapp.ui.recommendation.RecommendationActivity
 
 class ConfirmationActivity : AppCompatActivity() {
 
@@ -63,8 +65,16 @@ class ConfirmationActivity : AppCompatActivity() {
             binding.backButton.visibility = visibility(!it)
         }
 
-        viewModel.listItem.observe(this) {
-            binding.ingredientsList.adapter = ListStringAdapter(it)
+        viewModel.listItem.observe(this) { list ->
+            binding.ingredientsList.adapter = ListStringAdapter(list)
+            binding.backButton.setOnClickListener {
+                finish()
+            }
+            binding.recommendButton.setOnClickListener {_ ->
+                val recommendationIntent = Intent(this@ConfirmationActivity,RecommendationActivity::class.java)
+                recommendationIntent.putStringArrayListExtra("INGREDIENTS", list.toCollection(ArrayList()))
+                startActivity(recommendationIntent)
+            }
         }
 
         val previousPage = intent.getIntExtra("PAGE",-1)

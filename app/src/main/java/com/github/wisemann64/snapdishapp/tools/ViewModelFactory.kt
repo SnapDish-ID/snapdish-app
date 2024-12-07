@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.wisemann64.snapdishapp.ui.confirmation.ConfirmationViewModel
+import com.github.wisemann64.snapdishapp.ui.list.ListViewModel
 import com.github.wisemann64.snapdishapp.ui.recipe.RecipeViewModel
+import com.github.wisemann64.snapdishapp.ui.recommendation.RecommendationViewModel
 import com.github.wisemann64.snapdishapp.ui.snap.SnapViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application): ViewModelProvider.NewInstanceFactory()   {
@@ -33,6 +35,12 @@ class ViewModelFactory private constructor(private val mApplication: Application
         }
         if (modelClass.isAssignableFrom(ConfirmationViewModel::class.java)) {
             return ConfirmationViewModel() as T
+        }
+        if (modelClass.isAssignableFrom(RecommendationViewModel::class.java)) {
+            return RecommendationViewModel() as T
+        }
+        if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
+            return ListViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

@@ -1,5 +1,6 @@
 package com.github.wisemann64.snapdishapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -11,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.wisemann64.snapdishapp.databinding.ActivityMainBinding
+import com.github.wisemann64.snapdishapp.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,4 +47,17 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
     }
+//
+//    override fun onNewIntent(intent: Intent) {
+//        super.onNewIntent(intent)
+//        val navigateToFragment = intent.getStringExtra("navigate_to_fragment")
+//        if (navigateToFragment == "home") {
+//            navigateToFragmentHome()
+//        }
+//    }
+//
+//    private fun navigateToFragmentHome() {
+//        val fragment = HomeFragment()
+//        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main)
+//    }
 }

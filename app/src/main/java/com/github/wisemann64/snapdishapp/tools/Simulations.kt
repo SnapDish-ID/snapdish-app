@@ -16,6 +16,11 @@ class Simulations {
             delay(2000)
             return listOf("wisam","leo","richard","toto","nasha","kenny")
         }
+
+        suspend fun simulateRecommendation(recipes: List<String>): List<DataRecipe> {
+            delay(3678)
+            return listOf(DataRecipe(0,"","Gule"),DataRecipe(0,"","Ayam"),DataRecipe(0,"","Babi Guling"))
+        }
     }
 
 }
