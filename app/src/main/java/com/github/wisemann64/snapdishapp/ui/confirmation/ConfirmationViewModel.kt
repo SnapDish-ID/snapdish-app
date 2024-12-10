@@ -38,4 +38,8 @@ class ConfirmationViewModel : ViewModel() {
         }
     }
 
+    fun setIngredients(ingredients: List<String>) {
+        _listItem.value = ingredients
+        _loading.value = false
+    }
 }

@@ -26,4 +26,19 @@ class ListViewModel : ViewModel() {
         recipes.add("")
         _recipeCount.value = recipes.size
     }
+
+    fun setRecipe(position: Int, text: String) {
+        recipes[position] = text
+    }
+
+    fun removeItem(position: Int) {
+        recipes.removeAt(position)
+        _recipeCount.value = recipes.size
+    }
+
+    fun clear() {
+        recipes.clear()
+        recipes.add("")
+        _recipeCount.value = recipes.size
+    }
 }

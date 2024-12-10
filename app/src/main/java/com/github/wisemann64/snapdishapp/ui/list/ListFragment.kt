@@ -21,7 +21,7 @@ import com.github.wisemann64.snapdishapp.ui.snap.SnapViewModel
 class ListFragment : Fragment() {
 
     companion object {
-        private const val LIST = 0
+        private const val LIST = 1
     }
 
 
@@ -52,7 +52,7 @@ class ListFragment : Fragment() {
             if (viewModel.recipeCount.value != 0) {
                 val intent = Intent(requireActivity(), ConfirmationActivity::class.java)
                 intent.putExtra("PAGE", LIST)
-                intent.putStringArrayListExtra("RECIPES",viewModel.getRecipeList())
+                intent.putStringArrayListExtra("RECIPES",ArrayList<String>(viewModel.getRecipeList().toSet().filter { it.isNotEmpty() }))
                 startActivity(intent)
             }
         }
@@ -61,10 +61,14 @@ class ListFragment : Fragment() {
             viewModel.addItem()
         }
 
+        binding.clearButton.setOnClickListener {
+            viewModel.clear()
+        }
+
         binding.ingredientsList.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.recipeCount.observe(requireActivity()) {
-            val adapter = ListIngredientsAdapter()
+            val adapter = ListIngredientsAdapter(this,viewModel)
             adapter.submitList(viewModel.getRecipeList().map { DataIngredient(it) })
             binding.ingredientsList.adapter = adapter
         }

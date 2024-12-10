@@ -37,7 +37,7 @@ class RecipeActivity : AppCompatActivity() {
 
         val recipeId = intent.getIntExtra("RECIPE_ID",0)
 
-        viewModel.getRecipe(recipeId)
+        viewModel.getRecipe(recipeId, this)
 
         binding.loadingOverlay.visibility = VISIBLE
         binding.recipeText.visibility = GONE

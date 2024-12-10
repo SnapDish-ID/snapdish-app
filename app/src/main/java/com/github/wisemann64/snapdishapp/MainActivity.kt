@@ -11,8 +11,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.github.wisemann64.snapdishapp.data.DataPreferences
 import com.github.wisemann64.snapdishapp.databinding.ActivityMainBinding
 import com.github.wisemann64.snapdishapp.ui.home.HomeFragment
+import com.github.wisemann64.snapdishapp.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,14 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        enableEdgeToEdge()
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.container)) {v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val navView: BottomNavigationView = binding.navView
 
@@ -46,18 +40,20 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         supportActionBar?.hide()
+
+        if (!intent.getBooleanExtra("as_guest",false)) loginCheck()
+
+//        DataPreferences(this).addRecentRecipe("3")
+//        DataPreferences(this).addRecentRecipe("2")
+//        DataPreferences(this).addRecentRecipe("1")
     }
-//
-//    override fun onNewIntent(intent: Intent) {
-//        super.onNewIntent(intent)
-//        val navigateToFragment = intent.getStringExtra("navigate_to_fragment")
-//        if (navigateToFragment == "home") {
-//            navigateToFragmentHome()
-//        }
-//    }
-//
-//    private fun navigateToFragmentHome() {
-//        val fragment = HomeFragment()
-//        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main)
-//    }
+
+    private fun loginCheck() {
+        val pref = DataPreferences(this)
+        if (!pref.isLoggedIn()) {
+            val intent = Intent(this@MainActivity,LoginActivity::class.java)
+            intent.putExtra("back_to_close",true)
+            startActivity(intent)
+        }
+    }
 }

@@ -4,21 +4,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.wisemann64.snapdishapp.R
 import com.github.wisemann64.snapdishapp.databinding.ActivityConfirmationBinding
-import com.github.wisemann64.snapdishapp.databinding.ActivityRecipeBinding
-import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.VISIBLE
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.GONE
+import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.VISIBLE
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.visibility
 import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
 import com.github.wisemann64.snapdishapp.ui.items.ListStringAdapter
-import com.github.wisemann64.snapdishapp.ui.recipe.RecipeViewModel
 import com.github.wisemann64.snapdishapp.ui.recommendation.RecommendationActivity
 
 class ConfirmationActivity : AppCompatActivity() {
@@ -38,11 +32,11 @@ class ConfirmationActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
 
         val factory = ViewModelFactory.getInstance(this.application)
         viewModel = ViewModelProvider(this@ConfirmationActivity,factory)[ConfirmationViewModel::class.java]
@@ -84,7 +78,9 @@ class ConfirmationActivity : AppCompatActivity() {
 //            UDAH ADA URI NYA TINGGAL INFERENSI
             viewModel.inference(uri)
         } else if (previousPage == LIST) {
-//            shows list
+            val ingredients = intent.getStringArrayListExtra("RECIPES")
+            Log.i("ConfirmationActivity", ingredients.toString())
+            ingredients?.let { viewModel.setIngredients(it) }
         } else {
             throw Exception("PAGE intent extra doesn't exist")
         }

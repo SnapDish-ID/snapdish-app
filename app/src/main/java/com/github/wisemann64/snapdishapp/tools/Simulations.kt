@@ -7,9 +7,9 @@ import kotlinx.coroutines.delay
 class Simulations {
 
     companion object {
-        suspend fun simulateRecipeDataGetter(): DataRecipeDetailed {
+        suspend fun simulateRecipeDataGetter(recipeId: Int): DataRecipeDetailed {
             delay(1000)
-            return DataRecipeDetailed(0,"nulllsss","Babi Guling Enak","resep resep resep blablabla")
+            return DataRecipeDetailed(recipeId,"nulllsss","Babi Guling Enak $recipeId","resep resep resep blablabla")
         }
 
         suspend fun simulateComVisInference(): List<String> {

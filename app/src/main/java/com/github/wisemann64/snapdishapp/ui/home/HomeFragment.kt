@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.github.wisemann64.snapdishapp.data.DataPreferences
 import com.github.wisemann64.snapdishapp.data.DataRecipe
 import com.github.wisemann64.snapdishapp.databinding.FragmentHomeBinding
 import com.github.wisemann64.snapdishapp.ui.items.CustomLinearLayoutManager
@@ -46,9 +47,15 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val rv: RecyclerView = binding.recentRecipes
         val adapter = ListRecipeAdapter()
-        val list = mutableListOf(DataRecipe(0,"a","Rsep 1 gacor bgt wooh aku suka!!!"),
-            DataRecipe(1,"b","Rsep 2 ga enakkkk"),
-            DataRecipe(2,"c","Rsep 3 bolelaaa mayan enakk"))
+
+        val list2: List<String> = DataPreferences(requireContext()).getRecentRecipes().map {
+            it?: ""
+        }
+
+        val list = list2.map {
+            DataRecipe(it.toInt(),it,it)
+        }.toMutableList()
+
         adapter.submitList(list)
         rv.adapter = adapter
 

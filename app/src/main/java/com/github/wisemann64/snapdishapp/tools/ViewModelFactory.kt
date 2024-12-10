@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.github.wisemann64.snapdishapp.ui.confirmation.ConfirmationViewModel
+import com.github.wisemann64.snapdishapp.ui.favorites.FavoritesViewModel
 import com.github.wisemann64.snapdishapp.ui.list.ListViewModel
+import com.github.wisemann64.snapdishapp.ui.login.LoginViewModel
 import com.github.wisemann64.snapdishapp.ui.recipe.RecipeViewModel
 import com.github.wisemann64.snapdishapp.ui.recommendation.RecommendationViewModel
 import com.github.wisemann64.snapdishapp.ui.snap.SnapViewModel
@@ -41,6 +43,12 @@ class ViewModelFactory private constructor(private val mApplication: Application
         }
         if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
             return ListViewModel() as T
+        }
+        if (modelClass.isAssignableFrom(FavoritesViewModel::class.java)) {
+            return FavoritesViewModel() as T
+        }
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
