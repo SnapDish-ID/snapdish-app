@@ -33,6 +33,7 @@ class ListViewModel : ViewModel() {
 
     fun removeItem(position: Int) {
         if (recipes.size == 1) {
+            clear()
             return
         }
 

@@ -29,6 +29,18 @@ class ConfirmationViewModel(private val mApplication: Application) : ViewModel()
 
     val listItem: LiveData<List<String>> = _listItem
 
+    private val _selectedMainIngredient = MutableLiveData<String>().apply {
+        value = ""
+    }
+
+    val selectedMainIngredient: LiveData<String> = _selectedMainIngredient
+
+    private val _selectorVisible  = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    val selectorVisible: LiveData<Boolean> = _selectorVisible
+
     fun inference(uri: Uri) {
         _loading.value = true
         val classifier = ClassifierHelper.getInstance(mApplication)
@@ -40,5 +52,17 @@ class ConfirmationViewModel(private val mApplication: Application) : ViewModel()
     fun setIngredients(ingredients: List<String>) {
         _listItem.value = ingredients
         _loading.value = false
+    }
+
+    fun setMainIngredient(mainIngredient: String) {
+        _selectedMainIngredient.value = mainIngredient
+    }
+
+    fun setSelectorVisibility(value: Boolean) {
+        _selectorVisible.value = value
+    }
+
+    fun toggleVisibility() {
+        setSelectorVisibility(!(selectorVisible.value?:false))
     }
 }

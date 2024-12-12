@@ -17,7 +17,7 @@
         android:layout_marginEnd="8dp"
         android:text="Ini Rekomendasi dari Kami~"
         android:textAlignment="center"
-        android:textSize="48sp"
+        android:textSize="44sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,12 +47,11 @@
         app:layout_constraintTop_toBottomOf="@+id/recommendation_title" />
 
     <TextView
-        android:id="@+id/text_filter"
+        android:id="@+id/main_ingredient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="9dp"
-        android:text="Tempe"
         android:textColor="@color/green_1"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -75,6 +74,17 @@
         tools:listitem="@layout/item_recipe">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_ingredient_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-4dp"
+        app:layout_constraintStart_toEndOf="@id/image_filter"
+        app:layout_constraintTop_toTopOf="@+id/main_ingredient"
+        tools:itemCount="8"
+        tools:listitem="@layout/item_main_ingredient_selector" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading_overlay"

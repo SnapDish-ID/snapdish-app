@@ -10,7 +10,7 @@ class Simulations {
 
     companion object {
 
-        private val mainIngredients: List<String> = listOf("ayam", "ikan", "kambing", "sapi", "tahu", "telur", "tempe", "udang")
+        val mainIngredients: List<String> = listOf("ayam", "ikan", "kambing", "sapi", "tahu", "telur", "tempe", "udang")
 
         suspend fun simulateRecipeDataGetter(recipeId: String): DataRecipeDetailed {
             delay(1000)
