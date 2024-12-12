@@ -54,12 +54,6 @@ class RecommendationActivity : AppCompatActivity() {
             navigateBackToHome()
         }
 
-        onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                navigateBackToHome()
-            }
-        })
-
         binding.recommendedRecipes.layoutManager = CustomLinearLayoutManager(applicationContext)
 
         viewModel.loading.observe(this) {
@@ -78,7 +72,6 @@ class RecommendationActivity : AppCompatActivity() {
                     recipeIntent.putExtra("RECIPE_ID", data.id)
                     startActivity(recipeIntent)
                 }
-
             })
         }
 
@@ -88,7 +81,6 @@ class RecommendationActivity : AppCompatActivity() {
     private fun navigateBackToHome() {
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//            putExtra("navigate_to_fragment","home")
         }
         startActivity(intent)
         finish()

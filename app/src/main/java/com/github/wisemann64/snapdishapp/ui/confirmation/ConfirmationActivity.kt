@@ -32,12 +32,6 @@ class ConfirmationActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
-
         val factory = ViewModelFactory.getInstance(this.application)
         viewModel = ViewModelProvider(this@ConfirmationActivity,factory)[ConfirmationViewModel::class.java]
 
@@ -49,8 +43,6 @@ class ConfirmationActivity : AppCompatActivity() {
         binding.backButton.visibility = GONE
 
         binding.ingredientsList.layoutManager = LinearLayoutManager(this)
-        val adapter = ListStringAdapter(listOf("item 1","resep 2","bahan 3"," bahan 4"))
-        binding.ingredientsList.adapter = adapter
 
         viewModel.loading.observe(this) {
             binding.loadingOverlay.visibility = visibility(it)
@@ -73,16 +65,19 @@ class ConfirmationActivity : AppCompatActivity() {
 
         val previousPage = intent.getIntExtra("PAGE",-1)
 
-        if (previousPage == SNAP) {
-            val uri = Uri.parse(intent.getStringExtra("URI"))
-//            UDAH ADA URI NYA TINGGAL INFERENSI
-            viewModel.inference(uri)
-        } else if (previousPage == LIST) {
-            val ingredients = intent.getStringArrayListExtra("RECIPES")
-            Log.i("ConfirmationActivity", ingredients.toString())
-            ingredients?.let { viewModel.setIngredients(it) }
-        } else {
-            throw Exception("PAGE intent extra doesn't exist")
+        when (previousPage) {
+            SNAP -> {
+                val uri = Uri.parse(intent.getStringExtra("URI"))
+                viewModel.inference(uri)
+            }
+            LIST -> {
+                val ingredients = intent.getStringArrayListExtra("RECIPES")
+                Log.i("ConfirmationActivity", ingredients.toString())
+                ingredients?.let { viewModel.setIngredients(it) }
+            }
+            else -> {
+                throw Exception("PAGE intent extra doesn't exist")
+            }
         }
     }
 }

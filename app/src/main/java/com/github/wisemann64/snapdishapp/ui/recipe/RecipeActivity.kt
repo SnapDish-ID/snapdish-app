@@ -35,7 +35,7 @@ class RecipeActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val recipeId = intent.getIntExtra("RECIPE_ID",0)
+        val recipeId = intent.getStringExtra("RECIPE_ID") ?: ""
 
         viewModel.getRecipe(recipeId, this)
 
@@ -60,7 +60,5 @@ class RecipeActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-
     }
 }

@@ -246,7 +246,7 @@
         android:layout_marginBottom="120dp"
         android:text="Login as Guest"
         android:textSize="16sp"
-        android:textColor="#0000FF"
+        android:textColor="@color/green_2"
         app:layout_constraintTop_toBottomOf="@id/text_filler1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

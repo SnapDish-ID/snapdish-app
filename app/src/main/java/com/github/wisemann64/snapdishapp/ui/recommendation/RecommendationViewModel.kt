@@ -31,7 +31,7 @@ class RecommendationViewModel : ViewModel() {
 
 //        SIMULATE MODEL INFERENCE
         viewModelScope.launch {
-            val result = Simulations.simulateRecommendation(recipes)
+            val result = Simulations.simulateRecommendation(recipes,"tempe")
             _recipes.value = result
             _loading.value = false
         }

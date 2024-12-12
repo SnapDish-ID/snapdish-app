@@ -29,11 +29,10 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_snap, R.id.navigation_list, R.id.navigation_favorites
+                R.id.navigation_home, R.id.navigation_list, R.id.navigation_favorites
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -42,10 +41,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         if (!intent.getBooleanExtra("as_guest",false)) loginCheck()
-
-//        DataPreferences(this).addRecentRecipe("3")
-//        DataPreferences(this).addRecentRecipe("2")
-//        DataPreferences(this).addRecentRecipe("1")
     }
 
     private fun loginCheck() {

@@ -5,16 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.confirmation.ConfirmationActivity">
 
     <TextView
         android:id="@+id/confirmation_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Ini kah Bahannya?"
+        android:text="Ini kah Bahan-Bahannya?"
         android:textAlignment="center"
-        android:textSize="36sp"
+        android:textSize="44sp"
         android:textStyle="bold"
+        android:textColor="@color/green_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

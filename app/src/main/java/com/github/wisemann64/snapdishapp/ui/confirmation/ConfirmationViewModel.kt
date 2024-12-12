@@ -1,15 +1,17 @@
 package com.github.wisemann64.snapdishapp.ui.confirmation
 
+import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.wisemann64.snapdishapp.data.DataRecipeDetailed
+import com.github.wisemann64.snapdishapp.tools.ClassifierHelper
 import com.github.wisemann64.snapdishapp.tools.Simulations
 import kotlinx.coroutines.launch
 
-class ConfirmationViewModel : ViewModel() {
+class ConfirmationViewModel(private val mApplication: Application) : ViewModel() {
 
     companion object {
         private const val TAG = "ConfirmationViewModel"
@@ -29,13 +31,10 @@ class ConfirmationViewModel : ViewModel() {
 
     fun inference(uri: Uri) {
         _loading.value = true
-
-//        SIMULATE MODEL INFERENCE
-        viewModelScope.launch {
-            val result = Simulations.simulateComVisInference()
-            _listItem.value = result
-            _loading.value = false
-        }
+        val classifier = ClassifierHelper.getInstance(mApplication)
+        val result = classifier.inference(uri)
+        _listItem.value = result
+        _loading.value = false
     }
 
     fun setIngredients(ingredients: List<String>) {

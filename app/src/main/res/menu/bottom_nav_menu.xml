@@ -5,20 +5,19 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
-
-    <item
-        android:id="@+id/navigation_snap"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Snap" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_snap"-->
+<!--        android:icon="@drawable/ic_home_black_24dp"-->
+<!--        android:title="Snap" />-->
 
     <item
         android:id="@+id/navigation_list"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_list_black_24"
         android:title="List" />
 
     <item
         android:id="@+id/navigation_favorites"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_star_24"
         android:title="Favorites" />
 
 </menu>

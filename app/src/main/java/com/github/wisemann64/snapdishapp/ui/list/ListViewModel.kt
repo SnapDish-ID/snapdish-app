@@ -11,12 +11,12 @@ class ListViewModel : ViewModel() {
     }
 
     private val _recipeCount = MutableLiveData<Int>().apply {
-        value = 0
+        value = 1
     }
 
     val recipeCount: LiveData<Int> = _recipeCount
 
-    private val recipes: ArrayList<String> = arrayListOf()
+    private val recipes: ArrayList<String> = arrayListOf("")
 
     fun getRecipeList(): ArrayList<String> {
         return recipes.toCollection(ArrayList())
@@ -32,6 +32,10 @@ class ListViewModel : ViewModel() {
     }
 
     fun removeItem(position: Int) {
+        if (recipes.size == 1) {
+            return
+        }
+
         recipes.removeAt(position)
         _recipeCount.value = recipes.size
     }

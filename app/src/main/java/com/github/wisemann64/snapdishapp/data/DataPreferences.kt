@@ -1,41 +1,31 @@
 package com.github.wisemann64.snapdishapp.data
 
 import android.content.Context
+import android.util.Log
 
 internal class DataPreferences(context: Context) {
 
     companion object {
         private const val PREFS_NAME = "data_pref"
 
-        private const val FIRST_RECIPE = "first"
-        private const val SECOND_RECIPE = "second"
-        private const val THIRD_RECIPE = "third"
-
         private const val LOGGED_IN = "logged_in"
         private const val LOGIN_SESSION = "login_session"
 
-        private const val FIRST = 0
-        private const val SECOND = 1
-        private const val THIRD = 2
+        private fun toRefKey(pos: Int) = "RECIPE_$pos"
     }
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun setRecipe(pos: Int, id: String) {
+    private fun setRecipe(pos: Int, id: String) {
         val editor = preferences.edit()
-        val key = if (pos == FIRST) FIRST_RECIPE
-        else if (pos == SECOND) SECOND_RECIPE
-        else THIRD_RECIPE
+        val key = toRefKey(pos)
         editor.putString(key,id)
         editor.apply()
     }
 
-    fun getRecipe(pos: Int): String {
-        val key = if (pos == FIRST) FIRST_RECIPE
-        else if (pos == SECOND) SECOND_RECIPE
-        else THIRD_RECIPE
-
-        return preferences.getString(key,"") ?: ""
+    private fun getRecipe(pos: Int): String {
+        val key = toRefKey(pos)
+        return preferences.getString(key,null) ?: ""
     }
 
     fun login(session: String) {
@@ -61,19 +51,25 @@ internal class DataPreferences(context: Context) {
     }
 
     fun addRecentRecipe(id: String) {
+        val recent: ArrayList<String> = getRecentRecipes()
+        Log.i("DataPreferences","recent: $recent")
         val editor = preferences.edit()
 
-        editor.putString(THIRD_RECIPE,preferences.getString(SECOND_RECIPE,""))
-        editor.putString(SECOND_RECIPE,preferences.getString(FIRST_RECIPE,""))
-        editor.putString(FIRST_RECIPE,id)
+        recent.remove(id)
+        recent.add(0,id)
+
+        if (recent.size > 5) recent.removeAt(5)
+
+        for (i in 0..4) {
+            editor.putString(toRefKey(i), recent[i])
+        }
 
         editor.apply()
     }
 
-    fun getRecentRecipes(): List<String?> {
-        return listOf(
-            preferences.getString(FIRST_RECIPE,null),
-            preferences.getString(SECOND_RECIPE,null),
-            preferences.getString(THIRD_RECIPE,null))
+    fun getRecentRecipes(): ArrayList<String> {
+        val list = arrayListOf(getRecipe(0),getRecipe(1),getRecipe(2),getRecipe(3),getRecipe(4))
+        Log.i("DataPreferences",list.toString())
+        return list
     }
 }

@@ -22,14 +22,14 @@ class RecipeViewModel(application: Application): ViewModel() {
     }
 
     private val _shownRecipe = MutableLiveData<DataRecipeDetailed>().apply {
-        value = DataRecipeDetailed(-1,"","","")
+        value = DataRecipeDetailed("","","")
     }
 
     val loading: LiveData<Boolean> = _loading
 
     val shownRecipe: LiveData<DataRecipeDetailed> = _shownRecipe
 
-    fun getRecipe(recipeId: Int, context: Context) {
+    fun getRecipe(recipeId: String, context: Context) {
         _loading.value = true
 
 //        SIMULATE API CALLING
@@ -38,7 +38,7 @@ class RecipeViewModel(application: Application): ViewModel() {
             _shownRecipe.value = result
             _loading.value = false
 
-            DataPreferences(context).addRecentRecipe(recipeId.toString())
+            DataPreferences(context).addRecentRecipe(recipeId)
         }
     }
 

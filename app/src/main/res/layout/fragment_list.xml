@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".ui.list.ListFragment">
 
     <TextView
@@ -19,14 +20,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="List! Feature" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_next"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_right_arrow_36dp"
+        android:background="@drawable/circular_button"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:text="Caw!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/add_button"
         app:layout_constraintTop_toBottomOf="@+id/ingredients_list" />
@@ -38,31 +40,33 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_title"
         tools:listitem="@layout/item_ingredient" />
 
-    <Button
+    <ImageButton
         android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_plus_36dp"
+        android:background="@drawable/circular_button"
         android:layout_marginTop="20dp"
-        android:text="Tambah"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredients_list" />
 
-    <Button
+    <ImageButton
         android:id="@+id/clear_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_clear_36dp"
+        android:background="@drawable/circular_button"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:text="Clear"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredients_list" />

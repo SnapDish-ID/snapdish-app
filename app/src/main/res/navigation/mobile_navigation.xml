@@ -10,12 +10,11 @@
         android:name="com.github.wisemann64.snapdishapp.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_snap"
-        android:name="com.github.wisemann64.snapdishapp.ui.snap.SnapFragment"
-        android:label="Snap"
-        tools:layout="@layout/fragment_snap" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_snap"-->
+<!--        android:name="com.github.wisemann64.snapdishapp.ui.snap.SnapFragment"-->
+<!--        android:label="Snap"-->
+<!--        tools:layout="@layout/fragment_snap" />-->
 
     <fragment
         android:id="@+id/navigation_list"
