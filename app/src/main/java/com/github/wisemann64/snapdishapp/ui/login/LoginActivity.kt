@@ -8,13 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.github.wisemann64.snapdishapp.MainActivity
+import com.github.wisemann64.snapdishapp.controller.AuthController
 import com.github.wisemann64.snapdishapp.data.DataPreferences
 import com.github.wisemann64.snapdishapp.databinding.ActivityLoginBinding
+import com.github.wisemann64.snapdishapp.retrofit.AuthCallback
 import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
 
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.VISIBLE
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.GONE
-import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.visibility
 
 class LoginActivity : AppCompatActivity() {
 
@@ -104,7 +105,30 @@ class LoginActivity : AppCompatActivity() {
 
         binding.buttonLoginLogin.setOnClickListener {
 //            Toast.makeText(this,"[${viewModel.username.value}] [${viewModel.password.value}]", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this,"Logged in", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Logging in...", Toast.LENGTH_SHORT).show()
+
+            if (viewModel.username.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty()) {
+                Toast.makeText(this,"Username or password cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val authService = AuthController()
+            authService.login(viewModel.username.value!!,viewModel.password.value!!,object : AuthCallback {
+                override fun onSuccess(token: String) {
+                    Toast.makeText(this@LoginActivity,"Login Success", Toast.LENGTH_SHORT).show()
+                    DataPreferences(this@LoginActivity).login(token)
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }
+                    startActivity(intent)
+                    finish()
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Toast.makeText(this@LoginActivity,"Login Failed", Toast.LENGTH_SHORT).show()
+                }
+            })
 
             DataPreferences(this).login("abcabc")
 
@@ -126,7 +150,36 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener { }
 
         binding.buttonRegistRegister.setOnClickListener {
-            Toast.makeText(this, "[${viewModel.email.value}] [${viewModel.username.value}] [${viewModel.password.value}] [${viewModel.confirmPassword.value}]", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "[${viewModel.email.value}] [${viewModel.username.value}] [${viewModel.password.value}] [${viewModel.confirmPassword.value}]", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Logging in...", Toast.LENGTH_SHORT).show()
+
+            if (viewModel.username.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty() || viewModel.username.value.isNullOrEmpty() || viewModel.confirmPassword.value.isNullOrEmpty()) {
+                Toast.makeText(this,"Username or password cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (viewModel.password.value != viewModel.confirmPassword.value) {
+                Toast.makeText(this,"Password and confirm password must be the same", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val authService = AuthController()
+            authService.register(viewModel.email.value!!, viewModel.username.value!!,viewModel.password.value!!,object : AuthCallback {
+                override fun onSuccess(token: String) {
+                    Toast.makeText(this@LoginActivity,"Register Success", Toast.LENGTH_SHORT).show()
+                    DataPreferences(this@LoginActivity).login(token)
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }
+                    startActivity(intent)
+                    finish()
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Toast.makeText(this@LoginActivity,"Register Failed", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         binding.buttonLoginLogin.setOnClickListener {  }
