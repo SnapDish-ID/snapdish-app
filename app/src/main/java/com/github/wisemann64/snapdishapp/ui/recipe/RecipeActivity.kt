@@ -11,6 +11,9 @@ import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.VISIBLE
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.GONE
 import com.github.wisemann64.snapdishapp.tools.ToolsVisibility.Companion.visibility
+import com.github.wisemann64.snapdishapp.ui.items.CustomLinearLayoutManager
+import com.github.wisemann64.snapdishapp.ui.items.ListRecipeIngredientsAdapter
+import com.github.wisemann64.snapdishapp.ui.items.ListRecipeStepsAdapter
 
 class RecipeActivity : AppCompatActivity() {
 
@@ -24,12 +27,6 @@ class RecipeActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
         val factory = ViewModelFactory.getInstance(this.application)
         viewModel = ViewModelProvider(this@RecipeActivity,factory)[RecipeViewModel::class.java]
 
@@ -37,28 +34,41 @@ class RecipeActivity : AppCompatActivity() {
 
         val recipeId = intent.getStringExtra("RECIPE_ID") ?: ""
 
-        viewModel.getRecipe(recipeId, this)
+        viewModel.getRecipe(recipeId,this)
 
         binding.loadingOverlay.visibility = VISIBLE
-        binding.recipeText.visibility = GONE
-        binding.recipeImage.visibility = GONE
         binding.recipeTitle.visibility = GONE
-        binding.backButton.visibility = GONE
+        binding.recipeCategory.visibility = GONE
+        binding.recipeIngredients.visibility = GONE
+        binding.recipeSteps.visibility = GONE
+        binding.textBahan.visibility = GONE
+        binding.textCategory.visibility = GONE
+        binding.textLangkah.visibility = GONE
+
+        binding.recipeIngredients.layoutManager = CustomLinearLayoutManager(this)
+        binding.recipeSteps.layoutManager = CustomLinearLayoutManager(this)
 
         viewModel.loading.observe(this) {
             binding.loadingOverlay.visibility = visibility(it)
-            binding.recipeText.visibility = visibility(!it)
-            binding.recipeImage.visibility = visibility(!it)
             binding.recipeTitle.visibility = visibility(!it)
-            binding.backButton.visibility = visibility(!it)
+            binding.recipeCategory.visibility = visibility(!it)
+            binding.recipeIngredients.visibility = visibility(!it)
+            binding.recipeSteps.visibility = visibility(!it)
+            binding.textBahan.visibility = visibility(!it)
+            binding.textCategory.visibility = visibility(!it)
+            binding.textLangkah.visibility = visibility(!it)
         }
 
         viewModel.shownRecipe.observe(this) {
-            binding.recipeText.text = it.recipe
             binding.recipeTitle.text = it.title
-            binding.backButton.setOnClickListener {
-                finish()
-            }
+            binding.recipeCategory.text = it.category
+            val adapter1 = ListRecipeIngredientsAdapter()
+            adapter1.submitList(it.ingredients)
+            binding.recipeIngredients.adapter = adapter1
+
+            val adapter2 = ListRecipeStepsAdapter()
+            adapter2.submitList(it.steps)
+            binding.recipeSteps.adapter = adapter2
         }
     }
 }

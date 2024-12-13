@@ -12,19 +12,27 @@ internal class DataPreferences(context: Context) {
         private const val LOGIN_SESSION = "login_session"
 
         private fun toRefKey(pos: Int) = "RECIPE_$pos"
+        private fun toRefKeyTitle(pos: Int) = "RECIPE_TITLE_$pos"
     }
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    private fun setRecipe(pos: Int, id: String) {
+    private fun setRecipe(pos: Int, id: String, title: String) {
         val editor = preferences.edit()
-        val key = toRefKey(pos)
-        editor.putString(key,id)
+        val keyId = toRefKey(pos)
+        val keyTitle = toRefKeyTitle(pos)
+        editor.putString(keyId,id)
+        editor.putString(keyTitle,title)
         editor.apply()
     }
 
-    private fun getRecipe(pos: Int): String {
+    private fun getRecipeId(pos: Int): String {
         val key = toRefKey(pos)
+        return preferences.getString(key,null) ?: ""
+    }
+
+    private fun getRecipeTitle(pos: Int): String {
+        val key = toRefKeyTitle(pos)
         return preferences.getString(key,null) ?: ""
     }
 
@@ -50,25 +58,46 @@ internal class DataPreferences(context: Context) {
         return preferences.getBoolean(LOGGED_IN,false)
     }
 
-    fun addRecentRecipe(id: String) {
-        val recent: ArrayList<String> = getRecentRecipes()
+    fun addRecentRecipe(recipe: DataRecipe) {
+        val id = recipe.id
+        val title = recipe.title
+
+        val recent = getRecentRecipes()
+
+        Log.i("felix felix 3",recent.toString())
+
+        val recentId = ArrayList<String>().apply { addAll(recent.map { it.first }) }
+        val recentTitle = ArrayList<String>().apply { addAll(recent.map { it.second }) }
         Log.i("DataPreferences","recent: $recent")
         val editor = preferences.edit()
 
-        recent.remove(id)
-        recent.add(0,id)
+        recentId.remove(id)
+        recentTitle.remove(title)
 
-        if (recent.size > 5) recent.removeAt(5)
+        recentId.add(0,id)
+        recentTitle.add(0,title)
+
+        if (recent.size > 5) {
+            recentId.removeAt(5)
+            recentTitle.removeAt(5)
+        }
 
         for (i in 0..4) {
-            editor.putString(toRefKey(i), recent[i])
+            editor.putString(toRefKey(i), recentId[i])
+            editor.putString(toRefKeyTitle(i), recentTitle[i])
         }
 
         editor.apply()
     }
 
-    fun getRecentRecipes(): ArrayList<String> {
-        val list = arrayListOf(getRecipe(0),getRecipe(1),getRecipe(2),getRecipe(3),getRecipe(4))
+    fun getRecentRecipes(): ArrayList<Pair<String,String>> {
+        val list = arrayListOf(
+            Pair(getRecipeId(0),getRecipeTitle(0)),
+            Pair(getRecipeId(1),getRecipeTitle(1)),
+            Pair(getRecipeId(2),getRecipeTitle(2)),
+            Pair(getRecipeId(3),getRecipeTitle(3)),
+            Pair(getRecipeId(4),getRecipeTitle(4))
+        )
         Log.i("DataPreferences",list.toString())
         return list
     }

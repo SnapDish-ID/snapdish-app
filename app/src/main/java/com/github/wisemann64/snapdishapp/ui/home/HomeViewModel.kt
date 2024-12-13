@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.wisemann64.snapdishapp.data.DataPreferences
 import com.github.wisemann64.snapdishapp.data.DataRecipe
+import kotlinx.coroutines.runBlocking
 
 class HomeViewModel(private val mApplication: Application) : ViewModel() {
 
@@ -26,9 +27,7 @@ class HomeViewModel(private val mApplication: Application) : ViewModel() {
         val pref = DataPreferences(mApplication)
         val recent = pref.getRecentRecipes()
 
-        _recent.value = recent.map {
-            DataRecipe(it, "Recipe dengan id $it")
-        }
+        _recent.value = recent.map { DataRecipe(it.first,it.second) }
 
         _loading.value = false
     }
