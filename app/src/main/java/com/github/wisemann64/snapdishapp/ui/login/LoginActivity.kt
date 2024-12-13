@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.buttonRegistRegister.setOnClickListener {
 //            Toast.makeText(this, "[${viewModel.email.value}] [${viewModel.username.value}] [${viewModel.password.value}] [${viewModel.confirmPassword.value}]", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this,"Logging in...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Registering..", Toast.LENGTH_SHORT).show()
 
             if (viewModel.username.value.isNullOrEmpty() || viewModel.password.value.isNullOrEmpty() || viewModel.username.value.isNullOrEmpty() || viewModel.confirmPassword.value.isNullOrEmpty()) {
                 Toast.makeText(this,"Username or password cannot be empty", Toast.LENGTH_SHORT).show()
