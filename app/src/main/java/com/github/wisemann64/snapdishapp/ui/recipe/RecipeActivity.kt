@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.wisemann64.snapdishapp.R
 import com.github.wisemann64.snapdishapp.databinding.ActivityRecipeBinding
 import com.github.wisemann64.snapdishapp.tools.ViewModelFactory
@@ -46,7 +47,7 @@ class RecipeActivity : AppCompatActivity() {
         binding.textLangkah.visibility = GONE
 
         binding.recipeIngredients.layoutManager = CustomLinearLayoutManager(this)
-        binding.recipeSteps.layoutManager = CustomLinearLayoutManager(this)
+        binding.recipeSteps.layoutManager = LinearLayoutManager(this)
 
         viewModel.loading.observe(this) {
             binding.loadingOverlay.visibility = visibility(it)
